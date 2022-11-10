@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Login {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 ml-auto mr-auto">
+        <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">Login</h4>
+        </div>
+        <div class="card-body">
+            <h6 class="card-category">Add your credentials</h6>
+            <br/>
+            {% if next %}
+                <form action="/login/?next={{next}}" method="post" >
+            {% else %}
+                <form role="form" method="post" action="">                
+            {% endif %}
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">{{field.label_tag}}</label>
+                        {{ field }}
+                    </div>
+                    </div>
+                </div>
+                <br/>
+            {% endfor %}
+            <button type="submit" name="login" class="btn btn-primary pull-left">Login</button>
+        </form>
+        <span class="pull-right">
+            <a href={% url "password_reset" %} class="text-primary">Did you forget your password?</a>
+        </span>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

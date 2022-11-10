@@ -1,0 +1,110 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Users {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  {% comment %} Header {% endcomment %}
+    <div class="header bg-teal pb-6">
+        <div class="card card-plain">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Users</h4>
+                <p class="card-category">List of Users</p>
+                <div class="text-right">
+                    <a href="{% url 'signup' %}" class="btn btn-sm btn-neutral">New User</a>
+                </div>
+            </div>
+        </div>
+    <div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Users</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-header border-0">
+                        <form method="GET" class="row justify-content-end">
+                            <div class="col-md-auto">{{filters.form.email}}</div>
+                            <div class="col-md-auto">{{filters.form.first_name}}</div>
+                            <div class="col-md-auto">{{filters.form.last_name}}</div>
+                            <div class="col-md-auto">
+                                <button class="btn btn-primary" type="submit">
+                                    Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">username</th>
+                        <th scope="col">email</th>
+                        <th scope="col">first name</th>
+                        <th scope="col">last name</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        {% for user in page_obj  %}
+                        <tr>
+                        <td> {{user.username}} </td>
+                        <td> {{user.email}} </td>
+                        <td> {{user.first_name}} </td>
+                        <td> {{user.last_name}} </td>
+                        <!-- Acciones -->
+                        <td class="text-right">
+                            <div class="dropdown">
+                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href={% url 'users-detail' user.id %}>Detail</a>
+                                {% comment %} <a class="dropdown-item" href="eliminar/{{area.id}}/">Delete</a> {% endcomment %}
+                            </div>
+                            </div>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+                <div class="card-footer">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                    <span aria-hidden="true">&laquo;</span></a>
+                                    <span class="sr-only">Previous</span>
+                                </li>
+                            {% endif %}
+
+                            {% for i in paginator.page_range %}
+                                <li {% if page_obj.number == i %} class="page-item active" {% else %} class="page-item"  {% endif %}>
+                                    <a class="page-link" href="?page={{i}}">{{i}}</a>
+                                </li>
+                            {% endfor %}
+
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"><span aria-hidden="true">&raquo;</span></a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

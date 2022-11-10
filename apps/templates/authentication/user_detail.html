@@ -1,0 +1,94 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Products {% endblock title%}
+
+{% block content %} 
+
+<div class="container-fluid mt--6">
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">
+                User
+            </h4>
+            <p class="card-category">
+                {{ object.first_name }} {{ object.last_name }}
+            </p>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">password</label>
+                        <p>{{object.password}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">last_login</label>
+                        <p>{{object.last_login}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">is_superuser</label>
+                        <p>{{object.is_superuser}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">username</label>
+                        <p>{{object.username}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">first_name</label>
+                        <p>{{object.first_name}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">last_name</label>
+                        <p>{{object.last_name}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">is_staff</label>
+                        <p>{{object.is_staff}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">is_active</label>
+                        <p>{{object.is_active}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">date_joined</label>
+                        <p>{{object.date_joined}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">email</label>
+                        <p>{{object.email}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">is_client</label>
+                        <p>{{object.is_client}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">is_verified</label>
+                        <p>{{object.is_verified}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">createad_at</label>
+                        <p>{{object.createad_at}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">updated_at</label>
+                        <p>{{object.updated_at}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">groups</label>
+                        <p>{{object.groups}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">user_permissions</label>
+                        <p>{{object.user_permissions}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

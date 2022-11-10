@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} SignUp {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 ml-auto mr-auto">
+        <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">SignUp</h4>
+        </div>
+        <div class="card-body">
+            <h6 class="card-category">Fill out the form</h6>
+            <br/>
+            <form role="form" method="post" action="">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">{{field.label_tag}}</label>
+                        {{ field }}
+                    </div>
+                    </div>
+                </div>
+                <br/>
+            {% endfor %}
+            <button type="submit" name="signup" class="btn btn-primary pull-left">SignUp</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
