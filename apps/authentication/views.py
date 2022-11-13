@@ -82,18 +82,18 @@ class UserDetailView(LoginRequiredMixin,DetailView):
 # ================ View's Password Reset ================
 class PasswordResetView(auth_views.PasswordResetView):
     """View to send mail to change the password"""
-    template_name = "accounts/password_reset_form.html"
+    template_name = "authentication/password_reset_form.html"
     form_class = PasswordResetFormCustom
 
 
 class PasswordResetDoneView(auth_views.PasswordResetDoneView):
     """ View to show a success message for the above """
-    template_name = "accounts/password_reset_done.html"
+    template_name = "authentication/password_reset_done.html"
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     """ View to checks the link the user clicked and prompts for a new password """
-    template_name = "accounts/password_reset_confirm.html"
+    template_name = "authentication/password_reset_confirm.html"
     form_class = SetPasswordFormCustom
 
     def form_invalid(self, form):
@@ -104,7 +104,7 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 
 class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     """ View to show a success message for the above """
-    template_name = "accounts/password_reset_complete.html"
+    template_name = "authentication/password_reset_complete.html"
 
 
 # =================== Views Error's Manage ===================

@@ -5,7 +5,7 @@ from apps.authentication.views import Error400TemplateView, Error403TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),                # Django admin route
-    path("authentication/", include("apps.authentication.urls")),  # Auth routes - login / signup
+    path("", include("apps.authentication.urls")),  # Auth routes - login / signup
     path("", include("apps.home.urls"))             # UI Kits Html files
 ]
 
