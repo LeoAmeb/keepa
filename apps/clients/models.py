@@ -45,7 +45,7 @@ class Budget(models.Model):
         verbose_name_plural = 'Budgets'
 
     def __str__(self):
-        return "{} - {}".format(self.type, self.amount)
+        return "${}".format(self.amount)
 
 
 class Purchase(models.Model):
