@@ -16,7 +16,7 @@ class Product(models.Model):
     """ Model of a product """
     asin = models.CharField(max_length=10, unique=True)
     brand = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
+    title = models.TextField()
     description = models.TextField(null=True, blank=True)
     size = models.CharField(max_length=20, null=True, blank=True)
     color = models.CharField(max_length=30, null=True, blank=True)
@@ -104,9 +104,9 @@ def product_post_save_receiver(sender, instance, **kwargs):
 class ProductHistory(models.Model):
     product = models.ForeignKey(
         Product, related_name="history", on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255, null=True, blank=True)
-    brand = models.CharField(max_length=255)
+    title = models.TextField()
+    description = models.TextField(null=True, blank=True)
+    brand = models.TextField()
     size = models.CharField(max_length=20, null=True, blank=True)
     color = models.CharField(max_length=30, null=True, blank=True)
     amount = models.DecimalField(
