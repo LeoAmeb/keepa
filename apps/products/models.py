@@ -17,7 +17,7 @@ class Product(models.Model):
     asin = models.CharField(max_length=10, unique=True)
     brand = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     size = models.CharField(max_length=20, null=True, blank=True)
     color = models.CharField(max_length=30, null=True, blank=True)
     image = models.CharField(max_length=255, null=True, blank=True)
