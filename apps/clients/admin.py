@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.clients.models import Client, Budget #, Purchase
+from apps.clients.models import Client, Budget, Purchase
 
 # Register your models here.
 @admin.register(Client)
