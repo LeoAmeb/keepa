@@ -78,9 +78,8 @@
                         {% for product in page_obj %}
                             <tr>
                                 <td class="img-container">
-                                    <img
-                                        src="{{product.url_image}}"
-                                    />
+                                    <img class="img-fluid mx-auto d-block" style="width: 30%;" src="{{ product.url_image }}" alt="">
+                                    {% comment %} <img src="{{product.url_image}}"/> {% endcomment %}
                                 </td>
                                 <td class="text-center">{{product.title}}</td>
                                 <td class="text-center">

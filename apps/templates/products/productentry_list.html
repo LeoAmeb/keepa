@@ -99,7 +99,7 @@
                         {% endif %}
 
                     </td>
-                    <td> {{product_entry.product.title}} </td>
+                    <td> {{product_entry.product.title|slice:"0:10"}}... </td>
                     <td> {{product_entry.searcher}} </td>
                     <td> {{product_entry.created_at|date:"M d, Y"}} </td>
                     <td> {{product_entry.product.asin}} </td>
