@@ -1,0 +1,54 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Products {% endblock title%}
+
+{% block content %} 
+
+<div class="container-fluid mt--6">
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">
+                {{object.title}}
+            </h4>
+            <p class="card-category">
+                {{object.brand}}
+            </p>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="row justify-content-center">
+                        <img class="img-fluid img-thumbnail mx-auto d-block" style="width: 30%;" src="{{ object.url_image }}" alt="">
+                    </div>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-default" onclick="window.open('{{object.url_amazon}}', '_blank')">Go to Amazon</button>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Description</label>
+                        <p>{{ object.description }}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Size</label>
+                        <p>{{ object.size }}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Color</label>
+                        <p>{{ object.color }}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Last Price Buy Box</label>
+                        <p>{{ object.last_price_buy_box }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

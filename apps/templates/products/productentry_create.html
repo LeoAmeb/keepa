@@ -1,0 +1,93 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Product Entry {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+{% if product_form.errors %}
+    {% for field in product_form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in product_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if product_entry_form.errors %}
+    {% for field in product_entry_form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in product_entry_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if msg %}
+    <div class="alert alert-success">
+        <strong>{{ msg|escape }}</strong>
+    </div>
+{% endif %}
+
+    <div class="container">
+        <div class="col">
+            <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Create Product Entry </h4>
+                <p class="card-category">Complete the form</p>
+            </div>
+            <div class="card-body">
+                <form method = "POST" enctype = "multipart/form-data">
+                    {% csrf_token %}
+                <div class="col">
+                    <div class="form-group">
+                        <label>ASIN</label>
+                        {{ product_form.asin }}
+                    </div>
+                    <div class="form-group">
+                        <label>Store</label>
+                        {{ product_entry_form.store }}
+                    </div>
+                    <div class="form-group">
+                        <label>Link Store</label>
+                        {{ product_entry_form.link_store }}
+                    </div>
+                    <div class="form-group">
+                        <label>Buy Amount Per Piece</label>
+                        {{ product_entry_form.buy_amount_per_piece }}
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        {{ product_entry_form.quantity }}
+                    </div>
+                    <div class="form-group">
+                        <label>Observations</label>
+                        {{ product_entry_form.observations }}
+                    </div>
+
+                    <div class="form-group">
+                        <a class="btn btn-defatul" href={% url 'product-entry-list' %}>Cancel</a>
+                        <input type="submit" value="Add" class="btn btn-primary">
+                    </div>
+                </div>
+                </form>
+            </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

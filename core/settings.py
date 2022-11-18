@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.authentication',
     'apps.home', # Enable the inner home (home)
     'apps.clients',
+    'apps.products',
 ]
 
 MIDDLEWARE = [

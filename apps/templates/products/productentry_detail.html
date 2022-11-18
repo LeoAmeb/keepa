@@ -1,0 +1,116 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Product Entry {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Detail Product Entry {{product_entry.folio}}</h4>
+            </div>
+            <div class="card-body">
+                {% if edit %}
+                    {% if approve %}
+                        <form method = "POST" enctype = "multipart/form-data">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <div class="form-group">
+                                <a class="btn btn-default" href={% url 'product-entry-detail' product_entry.pk %}>Cancel</a>
+                                <input type="submit" onclick="return confirm('Are you sure?')" value="Update" name="order-create" class="btn btn-primary">
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    {% if update %}
+                        <form method = "POST" enctype = "multipart/form-data">
+                            {% csrf_token %}
+                                {{form.as_p}}
+                                <div class="form-group">
+                                    <a class="btn btn-default" href={% url 'product-entry-detail' product_entry.pk %}>Cancel</a>
+                                    <input type="submit" onclick="return confirm('Are you sure?')" value="Update" name="product-entry-update" class="btn btn-primary">
+                                </div>
+                        </form>                        
+                    {% endif %}
+
+                {% else %}
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Last Price Buy Box</label>
+                            <p>${{product_entry.buy_amount_per_piece}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Quantity</label>
+                            <p>{{product_entry.quantity}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Total Amount</label>
+                            <p>{{product_entry.total_amount}}</p>
+                        </div>
+                    </div>
+                    <a class="btn btn-default" href={% url 'product-entry-list' %}>Cancel</a>
+                    <a class="btn btn-info" href={% url 'product-entry-edit' product_entry.pk %}>
+                        Edit
+                    </a>
+                    {% if perms.products.can_approve %}
+                        <a class="btn btn-success" href={% url 'product-entry-approve' product_entry.pk %}>
+                            Change Status
+                        </a>
+                    {% endif %}
+
+                    {% endif %}
+    
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-profile">
+            <div class="card-avatar">
+                <a href={{ product_entry.product.url_amazon }} target="_blank">
+                    <img class="img" src="{{ product_entry.product.url_image }}" />
+                </a>
+            </div>
+            <div class="card-body">
+                <h6 class="card-category text-gray">
+                    {{ product_entry.product.brand }}
+                </h6>
+                <h4 class="card-title">
+                    {{ product_entry.product.title }}
+                </h4>
+                {% if product_entry.product.description %}
+                <p class="card-subtitle">
+                    {{ product_entry.product.description }}
+                </p>
+                {% endif %}
+                <ul class="list-group">
+                    {% if product_entry.product.size %}
+                        <li class="list-group-item"> <strong>Size:</strong> {{ product_entry.product.size }}</li>
+                    {% endif %}
+                    {% if product_entry.product.color %}
+                        <li class="list-group-item"> <strong>Color:</strong> {{ product_entry.product.color }}</li>
+                    {% endif %}
+
+                    <li class="list-group-item">
+                        <a class="btn btn-primary" href={{product_entry.product.url_amazon}} target="_blank" rel="noopener noreferrer">
+                            Go to Amazon
+                        </a>        
+                        <a class="btn btn-primary" href={{product_entry.link_store}} target="_blank" rel="noopener noreferrer">
+                            Go to {{product_entry.store}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

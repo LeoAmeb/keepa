@@ -1,0 +1,164 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Products {% endblock title%}
+
+{% block content %} 
+
+<div class="header bg-teal pb-6">
+    <div class="container-fluid">
+        <div class="card card-plain">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Products</h4>
+                <p class="card-category">List of products</p>
+                <div class="text-right">
+                    <a
+                        href="{% url 'products-add' %}"
+                        class="btn btn-sm btn-neutral"
+                        >New Product</a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header border-0">
+            <h3 class="mb-0">Products</h3>
+            <form method="GET" class="row justify-content-end">
+                <div class="form-group col-md-auto">
+                    <label for="id_brand">Brand</label>
+                    {{filters.form.brand}}
+                </div>
+                <div class="form-group col-md-auto">
+                    <label for="id_title">Title</label>
+                    {{filters.form.title}}
+                </div>
+                <div class="form-group col-md-auto">
+                    <label for="id_color">Color</label>
+                    {{filters.form.color}}
+                </div>
+                <div class="form-group col-md-auto">
+                    <label for="id_asin">ASIN</label>    
+                    {{filters.form.asin}}
+                </div>
+
+                <div class="form-group col-md-auto">
+                    <label for="id_start_date">Start Date</label>
+                    {{filters.form.start_date}}
+                </div>
+
+                <div class="form-group col-md-auto">
+                    <label for="id_stop_date">Stop Date</label>
+                    {{filters.form.stop_date}}
+                </div>
+                <div class="col-md-auto">
+                    <button class="btn btn-primary" type="submit">
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive-md">
+                <table class="table table-shoping">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Image</th>
+                            <th class="text-center">Title</th>
+                            <th class="text-center">Last price buy box</th>
+                            <th class="text-center">ASIN</th>
+                            <th class="text-center">Available</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        {% for product in page_obj %}
+                            <tr>
+                                <td class="img-container">
+                                    <img
+                                        src="{{product.url_image}}"
+                                    />
+                                </td>
+                                <td class="text-center">{{product.title}}</td>
+                                <td class="text-center">
+                                    ${{product.last_price_buy_box}}
+                                </td>
+                                <td class="text-center">{{product.asin}}</td>
+                                <td class="text-center">
+                                    {% if product.is_available %}
+                                        <span class="badge badge-success">Available</span>
+                                    {% else %}
+                                        <span class="badge badge-danger">Not Available</span>
+                                    {% endif %}
+                                </td>
+                                <!-- Actions -->
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a
+                                            class="btn btn-sm btn-icon-only text-light"
+                                            href="#"
+                                            role="button"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        >
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a
+                                                class="dropdown-item"
+                                                href={% url 'products-detail' product.id %}
+                                                >Detail</a
+                                            >
+                                            <a
+                                                class="dropdown-item"
+                                                href={{ product.url_amazon }}
+                                                target="_blank"
+                                                >Go to Amazon</a
+                                            >
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            <span aria-hidden="true">&laquo;</span></a>
+                            <span class="sr-only">Previous</span>
+                        </li>
+                    {% endif %}
+
+                    {% for i in paginator.page_range %}
+                        <li {% if page_obj.number == i %} class="page-item active" {% else %} class="page-item"  {% endif %}>
+                            <a class="page-link" href="?page={{i}}">{{i}}</a>
+                        </li>
+                    {% endfor %}
+
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><span aria-hidden="true">&raquo;</span></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
