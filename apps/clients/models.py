@@ -48,37 +48,37 @@ class Budget(models.Model):
         return "{} - {}".format(self.type, self.amount)
 
 
-# class Purchase(models.Model):
-#     client = models.ForeignKey(Client, related_name="purchases", on_delete=models.CASCADE)
-#     budget = models.ForeignKey(Budget, related_name="purchases", on_delete=models.CASCADE)
-#     order = models.ForeignKey("orders.Order", related_name="purchases", on_delete=models.CASCADE)
-#     amount = models.DecimalField(max_digits=12, decimal_places=2)
-#     quantity = models.IntegerField()
-#     confirm = models.BooleanField(default=False)
-#     user_created = models.ForeignKey(User, related_name="purchases", blank=True, null=True, on_delete=models.SET_NULL)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+class Purchase(models.Model):
+    client = models.ForeignKey(Client, related_name="purchases", on_delete=models.CASCADE)
+    budget = models.ForeignKey(Budget, related_name="purchases", on_delete=models.CASCADE)
+    order = models.ForeignKey("orders.Order", related_name="purchases", on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    quantity = models.IntegerField()
+    confirm = models.BooleanField(default=False)
+    user_created = models.ForeignKey(User, related_name="purchases", blank=True, null=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-#     class Meta:
-#         verbose_name = 'Purchase'
-#         verbose_name_plural = 'Purchases'
+    class Meta:
+        verbose_name = 'Purchase'
+        verbose_name_plural = 'Purchases'
     
-#     def __str__(self):
-#         return "Order: {} - Budget: {} - Amount: {} ".format(self.order.folio, self.budget.amount, self.amount)    
+    def __str__(self):
+        return "Order: {} - Budget: {} - Amount: {} ".format(self.order.folio, self.budget.amount, self.amount)    
     
-# @receiver(pre_save, sender=Purchase)
-# def rest_budget(sender, instance, **kwargs):
-#     if instance.id is None:
-#         instance.budget.amount -= instance.amount
-#         instance.budget.save()
-#     else:
-#         previous = Purchase.objects.get(pk=instance.pk)
-#         instance.budget.amount += previous.amount
-#         instance.budget.amount -= instance.amount
-#         instance.budget.save()
+@receiver(pre_save, sender=Purchase)
+def rest_budget(sender, instance, **kwargs):
+    if instance.id is None:
+        instance.budget.amount -= instance.amount
+        instance.budget.save()
+    else:
+        previous = Purchase.objects.get(pk=instance.pk)
+        instance.budget.amount += previous.amount
+        instance.budget.amount -= instance.amount
+        instance.budget.save()
 
-# @receiver(post_delete, sender=Purchase)
-# def sum_budget(sender, instance, **kwargs):
-#     """ Función para restar a lo condonado del gasto de cobranza """
-#     instance.budget.amount += instance.amount
-#     instance.budget.save()
+@receiver(post_delete, sender=Purchase)
+def sum_budget(sender, instance, **kwargs):
+    """ Función para restar a lo condonado del gasto de cobranza """
+    instance.budget.amount += instance.amount
+    instance.budget.save()

@@ -1,0 +1,157 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Product Entry {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Detail Order {{order.folio}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="col-md-5">
+                    
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Title</label>
+                        <p>{{order.product_entry.product.title}}</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Buy Amount Per Piece</label>
+                        <p>${{order.buy_amount_per_piece}}</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Quantity</label>
+                        <p>{{order.quantity}}</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Total amount</label>
+                        <p>${{order.total_amount}}</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Observations</label>
+                        <p>{{order.observations}}</p>
+                    </div>
+                
+                </div>
+                <a class="btn btn-info" href={% url 'order-asign-purchases' order.pk %}>
+                    Purchase
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card card-profile">
+            <div class="card-avatar">
+                <a href={{ order.product_entry.product.url_amazon }} target="_blank">
+                    <img class="img" src="{{ order.product_entry.product.url_image }}" />
+                </a>
+            </div>
+            <div class="card-body">
+                <h6 class="card-category text-gray">
+                    {{ order.product_entry.product.brand }}
+                </h6>
+                <h4 class="card-title">
+                    {{ order.product_entry.product.title }}
+                </h4>
+
+                {% if product_entry.product.description %}
+                    <p class="card-subtitle">
+                        {{ order.product_entry.product.description }}
+                    </p>
+                {% endif %}
+
+                <ul class="list-group">
+                    {% if order.product_entry.product.size %}
+                        <li class="list-group-item"> <strong>Size:</strong> {{ product_entry.product.size }}</li>
+                    {% endif %}
+
+                    {% if order.product_entry.product.color %}
+                        <li class="list-group-item"> <strong>Color:</strong> {{ product_entry.product.color }}</li>
+                    {% endif %}
+
+                    <li class="list-group-item">
+                        <a class="btn btn-primary" href={{order.product_entry.product.url_amazon}} target="_blank" rel="noopener noreferrer">
+                            Go to Amazon
+                        </a>
+                        <a class="btn btn-primary" href={{order.link_store}} target="_blank" rel="noopener noreferrer">
+                            Go to {{order.store}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% if budgets %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-success">
+                <h4 class="card-title">Order Assignments To Customers</h4>
+            </div>
+            <div class="card-body center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Quantity</th>
+                            <th>Amount</th>
+                            <th>Confirm</th>
+                            <th>Delete</th>
+                            <th>
+                                Confirm Purchase
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for budget in budgets %}
+                            <tr>
+                                <td>{{budget.client.user.get_full_name}}</td>
+                                <td>{{budget.quantity}}</td>
+                                <td>{{budget.amount}}</td>
+                                <td>
+                                    {% if budget.bought %}
+                                        <span class="badge badge-success">Yes</span>
+                                    {% else %}
+                                        <span class="badge badge-danger">Not</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="POST" action="{% url 'order-delete-purchases' order.pk budget.pk %}">
+                                        {% csrf_token %}
+                                        <input class="btn btn-danger" type="submit" value="Delete">
+                                    </form>    
+                                </td>
+                                {% if not budget.confirm %}
+                                <td>
+                                    <form method="POST" action="{% url 'order-bought-purchases' order.pk budget.pk %}">
+                                        {% csrf_token %}
+                                        <input class="btn btn-success" type="submit" value="Confirm">
+                                    </form>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>            
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+{% endblock javascripts %}

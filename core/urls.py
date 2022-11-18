@@ -8,6 +8,7 @@ urlpatterns = [
     path("", include("apps.authentication.urls")),  # Auth routes - login / signup
     path("clients/", include("apps.clients.urls")),
     path("products/", include("apps.products.urls")),
+    path("orders/", include("apps.orders.urls")),
     path("", include("apps.home.urls")),             # UI Kits Html files
 ]
 

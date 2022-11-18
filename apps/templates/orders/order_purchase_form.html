@@ -1,0 +1,88 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Product Entry {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose">
+                <h4 class="card-title">Asign Clients</h4>
+            </div>
+            <div class="card-body center">
+                <form method = "POST" enctype = "multipart/form-data">
+                {% csrf_token %}
+                    {{form.as_p}}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="reset" value="Cancel" class="btn btn-secondary">
+                            <input type="submit" onclick="return confirm('Are you sure?')" value="Add" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>    
+            </div>            
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="card card-profile">
+        <div class="card-avatar">
+            <a href={{ order.product_entry.product.url_amazon }} target="_blank">
+                <img class="img" src="{{ order.product_entry.product.url_image }}" />
+            </a>
+        </div>
+        <div class="card-body">
+            <h6 class="card-category text-gray">
+                {{ order.product_entry.product.brand }}
+            </h6>
+            <h4 class="card-title">
+                {{ order.product_entry.product.title }}
+            </h4>
+            
+            {% if product_entry.product.description %}
+            <p class="card-subtitle">
+                {{ order.product_entry.product.description }}
+            </p>
+            {% endif %}
+            
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Buy Amount Per Piece:</strong> ${{ order.product_entry.buy_amount_per_piece }}
+                </li>
+                {% if order.product_entry.product.size %}
+                    <li class="list-group-item"> <strong>Size:</strong> {{ product_entry.product.size }}</li>
+                {% endif %}
+
+                {% if order.product_entry.product.color %}
+                    <li class="list-group-item"> <strong>Color:</strong> {{ product_entry.product.color }}</li>
+                {% endif %}
+
+                <li class="list-group-item">
+                    <a class="btn btn-primary" href={{order.product_entry.product.url_amazon}} target="_blank" rel="noopener noreferrer">
+                        Go to Amazon
+                    </a>
+                    <a class="btn btn-primary" href={{order.link_store}} target="_blank" rel="noopener noreferrer">
+                        Go to {{order.store}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function onChange() {
+        let quantity = document.getElementById("id_quantity").value;
+        let buyAmountPerPiece = "{{order.buy_amount_per_piece}}"
+        document.getElementById("id_amount").value = quantity*buyAmountPerPiece;
+    }
+</script>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

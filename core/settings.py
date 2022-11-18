@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.home', # Enable the inner home (home)
     'apps.clients',
     'apps.products',
+    'apps.orders',
 ]
 
 MIDDLEWARE = [
