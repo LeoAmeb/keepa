@@ -12,6 +12,6 @@ class BudgetAdmin(admin.ModelAdmin):
     pass
 
 
-# @admin.register(Purchase)
-# class PurchaseAdmin(admin.ModelAdmin):
-#     pass
+@admin.register(Purchase)
+class PurchaseAdmin(admin.ModelAdmin):
+    pass
