@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Clients {% endblock title%}
+
+{% block content %} 
+
+<div class="container-fluid mt--6">
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">
+                {{object.user.get_full_name}}
+            </h4>
+            <p class="card-category">Client's Detail</p>
+            <div class="text-right">
+                <a class="btn btn-default" href={% url 'clients-add-budget' client.pk %}>Create Budget</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Name</label>
+                        <p>{{ client.user.get_full_name }}</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Created at</label>
+                        <p>{{ client.created_at }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="bmd-label-floating">Budget</label>
+                    <table class="table">
+                        <thead>
+                            <th scope="col">Total Amount</th>
+                            <th scope="col">Amount available</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col">Created By</th>
+                        </thead>
+                        <tbody>
+                            {% for budget in object.budgets.all  %}
+                                <tr class="table-success">
+                                    <td>${{budget.total_amount}}</td>
+                                    <td>${{budget.amount}}</td>
+                                    <td>{{budget.created_at}}</td>
+                                    <td>{{budget.created_by.get_full_name}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
