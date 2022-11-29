@@ -60,6 +60,14 @@ class ProductView(LoginRequiredMixin, View):
                 "segment": "products",
             }            
             return render(request, "products/product_create.html", context)
+        else:
+            context = {
+                "product_form": ProductForm(request.POST),
+                "segment": "products",
+            }            
+            for error, message in product_form.errors.items():
+                messages.success(request,  message[0])
+            return render(request, "products/product_create.html", context)
 
     def get_product(self, asin):
         if Product.objects.filter(asin=asin).exists():

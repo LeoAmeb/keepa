@@ -20,7 +20,7 @@ class ProductForm(forms.ModelForm):
         if product:
             product = product.last()
             if not product.is_available():
-                raise ValidationError({"asin": "Is not possible create a request of this product."})
+                raise ValidationError({"asin": "Is not possible create a product with this ASIN."})
 
         succes, response = get_data_keepa(asin)
         if not succes:
