@@ -63,22 +63,21 @@ The above copyright notice and this permission notice shall be included in all c
     </body>
 
     {% if messages %}
-        {% for message in messages %}
-            <h3>{{message.tag}}</h3>
+        {% for message in messages %}        
             <script>
-            icon = "check_circle"
-
-            if ("{{message.tags}}" === "error"){
-                icon = "danger"
-            }
-
-            $.notify({
-                icon: icon,
-                message: "{{message}}"
-            },{
-                type: "success",
-                timer: 2000,
-            });
+                const messages_icons = {
+                    success: 'check_circle',
+                    danger: 'warning',
+                    warning: 'warning',
+                    info: 'info',
+                }
+                $.notify({
+                    icon: messages_icons["{{message.tags}}"],
+                    message: "{{message}}"
+                },{
+                    type: "{{message.tags}}",
+                    timer: 2000,
+                });
             </script>
         {% endfor %}
     {% endif %}

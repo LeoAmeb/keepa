@@ -7,6 +7,7 @@ import os
 import dotenv
 from decouple import config
 from unipath import Path
+from django.contrib.messages import constants
 
 dotenv.load_dotenv()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,6 +29,13 @@ AUTH_USER_MODEL = 'authentication.User'
 
 # Message Storage
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+MESSAGE_TAGS = {
+    constants.DEBUG: 'debug',
+    constants.SUCCESS: 'success',
+    constants.ERROR: 'danger',
+    constants.WARNING: 'warning',
+    constants.INFO: 'info',
+}
 
 # Application definition
 

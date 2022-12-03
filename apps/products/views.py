@@ -66,7 +66,7 @@ class ProductView(LoginRequiredMixin, View):
                 "segment": "products",
             }            
             for error, message in product_form.errors.items():
-                messages.success(request,  message[0])
+                messages.error(request,  message[0])
             return render(request, "products/product_create.html", context)
 
     def get_product(self, asin):
